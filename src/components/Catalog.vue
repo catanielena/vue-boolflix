@@ -2,11 +2,11 @@
     <ul>
         <li v-for="(item,i) in catalog" :key="`film_${i}`">
             <h3>{{item.title}}</h3>
-            <ul>
+            <ol>
                 <li>{{item.original_title}}</li>
                 <li>{{item.otiginal_language}}</li>
                 <li>{{item.vote_average}}</li>
-            </ul>
+            </ol>
         </li>
     </ul>
 </template>
@@ -21,20 +21,22 @@ export default {
             catalog: null
         }
     },
-    props: {
-        titleRequest: String
-    },
-    mounted() {
-        this.$root.$on('titleInput', titleInput => {
+    methods: {
+        getData(e) {
             axios
                 .get('https://api.themoviedb.org/3/search/movie', {
                     params: {
                         api_key: "8eed27c438ed455893587d87d2a0d9d5",
                         language: "it-IT",
-                        query:titleInput
+                        query: e
                     }
                 })
                 .then((res) => this.catalog = res.data.results)
+        }
+    },
+    mounted() {
+        this.$parent.$on('titleInput', titleInput => {
+            this.getData(titleInput);
         })
     }
 }

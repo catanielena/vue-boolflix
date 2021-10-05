@@ -17,7 +17,7 @@ export default {
     },
     methods: {
         sendTitle() {
-            this.$root.$emit('titleInput', this.titleInput),
+            this.$parent.$emit('titleInput', this.titleInput),
             this.titleInput = ""
         }
     }
