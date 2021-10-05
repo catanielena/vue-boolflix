@@ -1,7 +1,7 @@
 <template>
     <header>
         <form action="#">
-            <input type="text" placeholder="Search" v-model="titleInput">
+            <input type="text" placeholder="Search" v-model="titleInput" @keyup.enter="sendTitle">
             <button type="button" @click.prevent="sendTitle">Send</button>
         </form>
     </header>
