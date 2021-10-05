@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Header/>
+    <Header @titleInput="getTitle"/>
     <main>
-      <Catalog/>
+      <Catalog :titleRequest="titleRequest"/>
     </main>
   </div>
 </template>
@@ -16,6 +16,16 @@ export default {
   components: {
     Header,
     Catalog
+  },
+  data() {
+    return {
+      titleRequest: ""
+    }
+  },
+  methods: {
+    getTitle(input) {
+      this.titleRequest = input;
+    }
   }
 }
 </script>

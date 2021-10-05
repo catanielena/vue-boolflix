@@ -1,14 +1,26 @@
 <template>
     <header>
-        <input type="text" placeholder="Search">
-        <button type="button">Send</button>
+        <form action="#">
+            <input type="text" placeholder="Search" v-model="titleInput">
+            <button type="button" @click.prevent="sendTitle">Send</button>
+        </form>
     </header>
 </template>
 
 <script>
 export default {
-    name: "Header"
-    
+    name: "Header",
+    data() {
+        return {
+            titleInput: ""
+        }
+    },
+    methods: {
+        sendTitle() {
+            this.$root.$emit('titleInput', this.titleInput),
+            this.titleInput = ""
+        }
+    }
 }
 
 </script>
