@@ -21,8 +21,11 @@ export default {
             catalog: null
         }
     },
-    methods: {
-        getData(e) {
+    props: {
+        titleRequest: String
+    },
+    watch: {
+        titleRequest:  function(e) {
             axios
                 .get('https://api.themoviedb.org/3/search/movie', {
                     params: {
@@ -33,11 +36,6 @@ export default {
                 })
                 .then((res) => this.catalog = res.data.results)
         }
-    },
-    mounted() {
-        this.$parent.$on('titleInput', titleInput => {
-            this.getData(titleInput);
-        })
     }
 }
 
