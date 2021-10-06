@@ -1,24 +1,19 @@
 <template>
     <ul class="catalog">
         <li class="catalog__item" v-for="(item,i) in catalog" :key="`film_${i}`">
-            <h3 class="item__title">{{item.title}}</h3>
-            <ol class="item__list">
-                <li class="item__item">{{item.original_title}}</li>
-                <li class="item__item item--circle">
-                    <img class="flag" :src="`https://unpkg.com/language-icons/icons/${item.original_language}.svg`" :alt="item.original_language" v-if="item.original_language != ''">
-                    <p v-else>Unknown</p>
-                </li>
-                <li class="item__item">{{item.vote_average}}</li>
-            </ol>
+            <Card :item="item"/>
         </li>
     </ul>
 </template>
 
 <script>
 import axios from 'axios';
-
+import Card from './Card.vue';
 export default {
     name: "Catalog",
+    components: {
+        Card
+    },
     data() {
         return {
             catalog: null
@@ -29,15 +24,32 @@ export default {
     },
     watch: {
         titleRequest:  function(e) {
-            axios
-                .get('https://api.themoviedb.org/3/search/movie', {
+            axios.all([
+                axios.get("https://api.themoviedb.org/3/search/movie", {
                     params: {
                         api_key: "8eed27c438ed455893587d87d2a0d9d5",
-                        language: "it-IT",
                         query: e
                     }
-                })
-                .then((res) => this.catalog = res.data.results)
+                }),
+                axios.get("https://api.themoviedb.org/3/search/tv", {
+                    params: {
+                        api_key: "8eed27c438ed455893587d87d2a0d9d5",
+                        query: e
+                    }
+                }),
+            ])
+            .then(axios.spread((res1, res2) => {
+            res1.data.results.forEach(e => {
+                e.category = "movie",
+                e.nameTitle = e.title
+            });
+            res2.data.results.forEach(e => {
+                e.category = "series",
+                e.nameTitle = e.name
+            });
+            const totalData = res1.data.results.concat(res2.data.results);
+            this.catalog = totalData.sort((a, b) => a.nameTitle.localeCompare(b.nameTitle));
+            }));
         }
     }
 }
@@ -46,21 +58,5 @@ export default {
 
 <style lang="scss" scoped>
 
-.catalog {
-    $this: &;
 
-    &__item {
-        
-        .flag {
-            height: 1.2rem;
-        }
-
-        .item--circle {
-            height: 1.2rem;
-            width: 1.2rem;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-    }
-}
 </style>
