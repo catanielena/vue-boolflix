@@ -65,14 +65,30 @@ export default {
               (e.category = "movie"), (e.nameTitle = e.title);
             });
             res2.data.results.forEach((e) => {
-              (e.category = "series"), (e.nameTitle = e.name);
+              (e.category = "tv"), (e.nameTitle = e.name);
             });
             const totalData = res1.data.results.concat(res2.data.results);
             this.catalog = totalData.sort((a, b) =>
               a.nameTitle.localeCompare(b.nameTitle)
             );
+            this.catalog.forEach((e) => {
+              e.cast_list= [];
+              axios 
+                .get(`https://api.themoviedb.org/3/${e.category}/${e.id}/credits`, {
+                  params: {
+                    api_key: "8eed27c438ed455893587d87d2a0d9d5"
+                  }
+                })
+                .then(res => {
+                  let i = 0;
+                  while(i<5 && i< res.data.cast.length) {
+                    e.cast_list.push(res.data.cast[i].name); 
+                    i++;
+                  }
+                });
+            })
           })
-        );
+        )
     },
   },
   methods: {

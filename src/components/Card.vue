@@ -9,7 +9,7 @@
         
         <ol class="card__list" :class="[active ? show : hide]" @mouseleave="mouseLeave">
             <li><h3 class="card">{{item.nameTitle}}</h3></li>
-            <li class="card__item f--size-md text--grey" v-if="item.category=='movie'">{{item.original_title}}</li>
+            <li class="card__item f--size-md text--grey">{{item.original_title || item.original_name}}</li>
             <li class="card__item flag-container item--m-bottom--auto">
                 <img class="flag" 
                 :src="`https://unpkg.com/language-icons/icons/${posterPath(item.original_language)}.svg`" 
@@ -17,6 +17,12 @@
                 v-if="posterPath(item.original_language)">
                 <!-- <img class="flag" :src="`https://unpkg.com/language-icons/icons/ch.svg`" :alt="item.original_language" v-else-if="item.original_language == 'cn'"> -->
                 <p v-else>Unknown Data</p>
+            </li>
+            <li class="card__item">
+                <ul>
+                    <li class="text--grey" v-if="item.cast_list.length != 0">Cast:</li>
+                    <li class="f--size-sm" v-for="actor in item.cast_list" :key="`${item.nameTitle}_${actor}`">{{actor}}</li>
+                </ul>
             </li>
             <li class="card__item text--right f--size-sm">MDB Rating {{item.vote_average}}</li>
             <li class="card__item item-stars text--right">
@@ -26,7 +32,6 @@
                 :class="starCondition(i)">>
                     <path class="cls-1" d="M193.21,252.74l19.23,39a3.69,3.69,0,0,0,2.78,2l43,6.25a3.69,3.69,0,0,1,2,6.29l-31.11,30.33a3.68,3.68,0,0,0-1.06,3.27l7.35,42.82a3.69,3.69,0,0,1-5.36,3.89l-38.46-20.22a3.71,3.71,0,0,0-3.43,0l-38.46,20.22a3.69,3.69,0,0,1-5.35-3.89l7.34-42.82a3.68,3.68,0,0,0-1.06-3.27l-31.11-30.33a3.69,3.69,0,0,1,2-6.29l43-6.25a3.69,3.69,0,0,0,2.78-2l19.23-39A3.69,3.69,0,0,1,193.21,252.74Z" transform="translate(-117.93 -250.19)"/>
                 </svg>
-
             </li>
         </ol>
     </div>
