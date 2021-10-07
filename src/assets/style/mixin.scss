@@ -1,0 +1,67 @@
+//flex-center-between
+@mixin flex--SB-C{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+//flex-center-between
+@mixin flex--SA-C{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+//flex-start-center
+@mixin flex--ST-C{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+//flex-start-start
+@mixin flex--ST-ST{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+//flex-center
+@mixin flex--x-C{
+    display: flex;
+    align-items: center;
+}
+
+// background image
+@mixin bgImg($pathImg) {
+    background-image: url($pathImg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+//object fit
+@mixin objFit--C-T {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+// inlineList
+@mixin inlineList {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+//animation
+@mixin animation-enter {
+    animation-name: enter;
+    animation-duration: 1.2s;
+}
+
+@mixin animation-leave {
+    animation-name: leave;
+    animation-duration: 1.2s;
+}

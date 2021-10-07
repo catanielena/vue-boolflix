@@ -1,0 +1,126 @@
+@import './variables';
+@import './mixin';
+// reset
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+//scrollbar
+::-webkit-scrollbar {display:none}
+
+html {
+    scroll-behavior: smooth;
+}
+
+//wrapper
+.wrapper {
+    padding: 0 $gutter-md;
+}
+//font
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+body, button, a, input {
+    font-family: 'Roboto Condensed', sans-serif;
+    color: $textColor;
+}
+
+h2 {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 300;
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+.f--size-sm {
+    font-size: $f-sm;
+}
+
+.f--size-md {
+    font-size: $f-md;
+    font-style: italic;
+    font-weight: 100;
+}
+
+.text--right {
+    text-align: right;
+}
+.text--grey {
+    color: $grey;
+} 
+
+//reset list
+ul, ol {
+    list-style: none;
+}
+
+//reset a
+a {
+    display: inline-block;
+    text-decoration: none;
+}
+
+//button
+button {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn--back-to-top {
+    padding: $gutter-sm $gutter;
+    margin: $gutter-md 0;
+    background-color: $red;
+    font-size: 1rem;
+    border-radius: .1rem;
+    bottom: 100px;
+}
+
+//input
+input {
+    padding: $gutter-sm $gutter;
+    border: .05rem solid $grey;
+    border-radius: .15rem;
+    font-size: 1rem;
+    color: $textColor;
+    background-color: transparent;
+}
+
+input:focus {outline:none;}
+//animation
+@keyframes enter {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes leave {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+//show
+.show-inline {
+    display: inline-block;
+    @include animation-enter;
+}
+
+//hide
+.hide {
+    display: none;
+    @include animation-leave;
+}
