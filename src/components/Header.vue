@@ -3,7 +3,7 @@
         <!-- <div class="header__navbar">
         </div>  -->
         <div class="navbar__logo">
-            <img src='../assets/img/boolflix_logo.png' alt="">
+            <img src='https://fontmeme.com/permalink/211007/c072857f28ffed69c9266a55183f4c20.png' alt="">
         </div>
         <nav class="navbar__nav">
             <ul class="nav__list">
