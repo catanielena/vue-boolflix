@@ -18,9 +18,10 @@
                 <!-- <img class="flag" :src="`https://unpkg.com/language-icons/icons/ch.svg`" :alt="item.original_language" v-else-if="item.original_language == 'cn'"> -->
                 <p v-else>Unknown Data</p>
             </li>
+            <li class="card__item item--genres">{{genresString()}}</li>
             <li class="card__item">
                 <ul>
-                    <li class="text--grey" v-if="item.cast_list.length != 0">Cast:</li>
+                    <li class="text--grey">Cast:</li>
                     <li class="f--size-sm" v-for="actor in item.cast_list" :key="`${item.nameTitle}_${actor}`">{{actor}}</li>
                 </ul>
             </li>
@@ -41,7 +42,8 @@
 export default {
     name:"Card",
     props: {
-        item: Object
+        item: Object,
+        genres: Array
     },
     data() {
         return {
@@ -74,6 +76,17 @@ export default {
             } else {
                 return false
             }
+        },
+        genresString() {
+            return this.item.genre_ids
+                .map((e) => {
+                for(let i=0; i<this.genres.length; i++) {
+                    if(this.genres[i].id == e) {
+                        return this.genres[i].name;
+                    }
+                }
+                })
+                .join(', ');
         }
     }
 }
@@ -130,11 +143,11 @@ export default {
     }
 
     .fullStar {
-        fill: #fff001;
+        fill: $yellow;
     }
 
     .emptyStar {
-        stroke: #fff001;
+        stroke: $yellow;
         stroke-width: .25rem;
         fill: transparent;
     }
@@ -159,7 +172,6 @@ export default {
         width: 100%;
         height: 100%;
         padding: $gutter-md $gutter-md 5rem $gutter-md;
-        // @include bgImg(require('../assets/img/gb_poster.png'))
         background-image: url('../assets/img/bg_poster.jpg');
         background-position: center;
         background-size: cover;
@@ -168,6 +180,13 @@ export default {
         h3 {
             font-size: 3rem;
         }
+    }
+
+    .item--genres {
+        margin: $gutter-md 0;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #7a838c;
     }
 }
 </style>
