@@ -14,7 +14,7 @@
                     <button type="button" class="btn f--size-sm btn-filter" @click="filterCatalogBy('movie'); movieActive = !movieActive; seriesActive=false" :class="{'active' : movieActive}">Movie</button>
                 </li>
                 <li class="list__item">
-                    <button type="button" class="btn f--size-sm btn-filter" @click="filterCatalogBy('series');seriesActive = !seriesActive; movieActive=false" :class="{'active' : seriesActive}">Series</button>
+                    <button type="button" class="btn f--size-sm btn-filter" @click="filterCatalogBy('tv');seriesActive = !seriesActive; movieActive=false" :class="{'active' : seriesActive}">Series</button>
                 </li>
             </ul>
         </nav>
