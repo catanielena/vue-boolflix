@@ -55,6 +55,25 @@ h3 {
     color: $grey;
 } 
 
+
+@media screen and (max-width: 768px) {
+    h2 {
+        font-size: 1rem;
+    }
+    
+    h3 {
+        font-size: 1rem;
+    }
+    .f--size-sm {
+        font-size: .6rem;
+    }
+    
+    .f--size-md {
+        font-size: 1rem;
+        font-style: italic;
+        font-weight: 100;
+    }
+}
 //reset list
 ul, ol {
     list-style: none;

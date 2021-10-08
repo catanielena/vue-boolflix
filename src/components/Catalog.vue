@@ -227,6 +227,7 @@ export default {
 .genres-filter {
   @include inlineList;
   padding: $gutter-md 0;
+  flex-wrap: wrap;
 
   .btn-filter {
     padding: $gutter $gutter-md;
@@ -300,4 +301,36 @@ export default {
   bottom: $gutter-md;
   z-index: 10;
 }
+
+@media screen and (max-width: 768px) {
+  .related {
+    display: none;
+  }
+  .catalog {
+
+    .catalog__item {
+      height: 16rem;
+      width: calc(25% - ($gutter-xs * 2));
+
+      &::after {
+        box-shadow: inset 0px -60px 50px -50px #000;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .catalog {
+
+    .catalog__item {
+      height: 16rem;
+      width: calc(50% - ($gutter-xs * 2));
+
+      &::after {
+        box-shadow: inset 0px -60px 50px -50px #000;
+      }
+    }
+  }
+}
+
 </style>

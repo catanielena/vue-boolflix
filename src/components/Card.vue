@@ -27,7 +27,7 @@
             <!-- cast__cast -->      
             <li class="card__item" v-if="item.cast_list != 0">
                 <ul>
-                    <li class="text--grey">Cast:</li>
+                    <li class="text--grey f--size-sm">Cast:</li>
                     <li class="f--size-sm" v-for="actor in item.cast_list" :key="`${item.nameTitle}_${actor}`">{{actor}}</li>
                 </ul>
             </li>
@@ -126,10 +126,10 @@ export default {
 
     }
     .flag-container {
-            height: 1.2rem;
-            width: 1.2rem;
-            border-radius: 5px;
-            overflow: hidden;
+        height: 1.2rem;
+        width: 1.2rem;
+        // border-radius: .3125rem;
+        // overflow: hidden;
         .flag {
                 width: 100%;
         }
@@ -186,6 +186,24 @@ export default {
         font-size: 1.2rem;
         font-weight: 700;
         color: #7a838c;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .card {
+        .missing--image {
+
+            h3 {
+                font-size: 1.3rem;
+            }
+        }
+        .item--genres {
+            font-size: .7rem;
+        }
+
+        svg{
+            width: .6rem;
+        }
     }
 }
 </style>
