@@ -23,7 +23,7 @@
         :key="`film_${i}`"
         :id="`film_${i}`"
       >
-        <Card :item="item" :genres="genres"/>
+        <Card :item="item" :genres="genres" />
       </li>
     </ul>
     <div class="back-to-top">
@@ -53,38 +53,39 @@ export default {
       showInline: "show-inline",
       hide: "hide",
       scrolled: false,
-      genres:[],
+      genres: [],
     };
   },
   props: {
     titleRequest: String,
   },
   created() {
-    this.titleRequest= "Hello";
-      axios
+    this.titleRequest = "Hello";
+    axios
       .all([
         axios.get("https://api.themoviedb.org/3/genre/tv/list", {
           params: {
-            api_key: "8eed27c438ed455893587d87d2a0d9d5"
-          }
+            api_key: "8eed27c438ed455893587d87d2a0d9d5",
+          },
         }),
         axios.get("https://api.themoviedb.org/3/genre/movie/list", {
           params: {
-            api_key: "8eed27c438ed455893587d87d2a0d9d5"
-          }
+            api_key: "8eed27c438ed455893587d87d2a0d9d5",
+          },
         }),
       ])
-      .then(      
+      .then(
         axios.spread((tv, movie) => {
-          this.genres = tv.data.genres.concat(movie.data.genres)
-      }))
+          this.genres = tv.data.genres.concat(movie.data.genres);
+        })
+      );
   },
   watch: {
     titleRequest: function (e) {
       const params = {
         api_key: "8eed27c438ed455893587d87d2a0d9d5",
         query: e,
-      }
+      };
       axios
         .all([
           axios.get("https://api.themoviedb.org/3/search/movie", {
@@ -109,44 +110,59 @@ export default {
             );
             //get cast//genres
             this.catalog.forEach((e) => {
-              e.cast_list= [];
-              e.genresList= [];
-              axios 
-                .get(`https://api.themoviedb.org/3/${e.category}/${e.id}/credits`, {
-                  params: {
-                    api_key: "8eed27c438ed455893587d87d2a0d9d5"
+              e.cast_list = [];
+              e.genresList = [];
+              axios
+                .get(
+                  `https://api.themoviedb.org/3/${e.category}/${e.id}/credits`,
+                  {
+                    params: {
+                      api_key: "8eed27c438ed455893587d87d2a0d9d5",
+                    },
                   }
-                })
-                .then(res => {
+                )
+                .then((res) => {
                   let i = 0;
-                  while(i<5 && i< res.data.cast.length) {
-                    e.cast_list.push(res.data.cast[i].name); 
+                  while (i < 5 && i < res.data.cast.length) {
+                    e.cast_list.push(res.data.cast[i].name);
                     i++;
                   }
+                  e.genresList = e.genre_ids.map((e) => {
+                    for (let i = 0; i < this.genres.length; i++) {
+                      if (this.genres[i].id == e) {
+                        return this.genres[i].name;
+                      }
+                    }
+                  });
+                  e.genresList.join(", ");
                 });
             });
           })
         );
-        //!then
+      //!then
     },
   },
   methods: {
-      filterBy() {
-        return this.catalog.filter((e) => e.category.toLowerCase().includes(this.filterString.toLowerCase()));
-      },
-      topFunction() {
-        this.$refs = 0;
-        document.documentElement.scrollTop = 0;
-      },
-      scroll () {
-        window.onscroll = () => {
-          window.pageYOffset > 1000 ? this.scrolled = true : this.scrolled = false;
-        }
-      }
+    filterBy() {
+      return this.catalog.filter((e) =>
+        e.category.toLowerCase().includes(this.filterString.toLowerCase())
+      );
+    },
+    topFunction() {
+      this.$refs = 0;
+      document.documentElement.scrollTop = 0;
+    },
+    scroll() {
+      window.onscroll = () => {
+        window.pageYOffset > 1000
+          ? (this.scrolled = true)
+          : (this.scrolled = false);
+      };
+    },
   },
   mounted() {
     this.$parent.$on("filterMovie", (filter) => {
-        this.filterString = filter;
+      this.filterString = filter;
     });
     this.scroll();
   },

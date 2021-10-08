@@ -1,15 +1,19 @@
 <template>
     <div class="card">
+        <!-- card__poster -->
         <div class="card__poster" :class="[active ? hide : show]" @click="mouseOver">
             <img :src="`https://image.tmdb.org/t/p/w342${item.poster_path}`" :alt="item.nameTitle" v-if="item.poster_path">
             <div class="missing--image" v-else>
                 <h3 class="card">{{item.nameTitle}}</h3>
             </div>
         </div>
-        
+        <!-- card__list -->      
         <ol class="card__list" :class="[active ? show : hide]" @mouseleave="mouseLeave">
+            <!-- card__film-title -->      
             <li><h3 class="card">{{item.nameTitle}}</h3></li>
+            <!-- card__film-original-title -->      
             <li class="card__item f--size-md text--grey">{{item.original_title || item.original_name}}</li>
+            <!-- card__film-language-flag -->      
             <li class="card__item flag-container item--m-bottom--auto">
                 <img class="flag" 
                 :src="`https://unpkg.com/language-icons/icons/${posterPath(item.original_language)}.svg`" 
@@ -18,14 +22,18 @@
                 <!-- <img class="flag" :src="`https://unpkg.com/language-icons/icons/ch.svg`" :alt="item.original_language" v-else-if="item.original_language == 'cn'"> -->
                 <p v-else>Unknown Data</p>
             </li>
+            <!-- card__genres -->      
             <li class="card__item item--genres">{{genresString()}}</li>
-            <li class="card__item">
+            <!-- cast__cast -->      
+            <li class="card__item" v-if="item.cast_list != 0">
                 <ul>
                     <li class="text--grey">Cast:</li>
                     <li class="f--size-sm" v-for="actor in item.cast_list" :key="`${item.nameTitle}_${actor}`">{{actor}}</li>
                 </ul>
             </li>
+            <!-- cast__MDB Rating-->      
             <li class="card__item text--right f--size-sm">MDB Rating {{item.vote_average}}</li>
+            <!-- cast__MDB Rating-stars-->      
             <li class="card__item item-stars text--right">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 143.95 137.32"
                 v-for="(item,i) in 5" 
@@ -34,7 +42,7 @@
                     <path class="cls-1" d="M193.21,252.74l19.23,39a3.69,3.69,0,0,0,2.78,2l43,6.25a3.69,3.69,0,0,1,2,6.29l-31.11,30.33a3.68,3.68,0,0,0-1.06,3.27l7.35,42.82a3.69,3.69,0,0,1-5.36,3.89l-38.46-20.22a3.71,3.71,0,0,0-3.43,0l-38.46,20.22a3.69,3.69,0,0,1-5.35-3.89l7.34-42.82a3.68,3.68,0,0,0-1.06-3.27l-31.11-30.33a3.69,3.69,0,0,1,2-6.29l43-6.25a3.69,3.69,0,0,0,2.78-2l19.23-39A3.69,3.69,0,0,1,193.21,252.74Z" transform="translate(-117.93 -250.19)"/>
                 </svg>
             </li>
-        </ol>
+        </ol>     
     </div>
 </template>
 
@@ -42,8 +50,7 @@
 export default {
     name:"Card",
     props: {
-        item: Object,
-        genres: Array
+        item: Object
     },
     data() {
         return {
@@ -78,15 +85,7 @@ export default {
             }
         },
         genresString() {
-            return this.item.genre_ids
-                .map((e) => {
-                for(let i=0; i<this.genres.length; i++) {
-                    if(this.genres[i].id == e) {
-                        return this.genres[i].name;
-                    }
-                }
-                })
-                .join(', ');
+            return this.item.genresList.join(', ');
         }
     }
 }
