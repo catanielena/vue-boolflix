@@ -1,39 +1,36 @@
 <template>
   <div class="wrapper">
+    <!-- title-request -->
     <div class="title-request">
       <span>Resuts for</span>
       <h2>{{ titleRequest }}</h2>
     </div>
+    <!-- genres-filter -->
+    <ul class="genres-filter">
+      <li class="genres-filter__item" v-for="(genre, gInd) in filterCollection" :key="`${genre.btn}-${gInd}`">
+        <button type="button" class="btn btn-filter" @click="getFilter(genre.btn, gInd); genre.active= !genre.active" :class="{'active' : genre.active}">
+          {{ genre.btn }}
+        </button>
+      </li>
+    </ul>
+    <!-- related -->
     <div class="related f--size-sm">
       <div class="text--grey related__title">Explore titles related to:</div>
       <ul class="related__list">
-        <li
-          class="list__item f--size-sm"
-          v-for="(item, i) in filterBy()"
-          :key="`title_${i}`"
-        >
+        <li class="list__item f--size-sm" v-for="(item, i) in filterBy()" :key="`title_${i}`">
           <a :href="`#film_${i}`">{{ item.nameTitle }}</a>
         </li>
       </ul>
     </div>
+    <!-- catalog -->
     <ul class="catalog">
-      <li
-        class="catalog__item"
-        v-for="(item, i) in filterBy()"
-        :key="`film_${i}`"
-        :id="`film_${i}`"
-      >
-        <Card :item="item" :genres="genres" />
+      <li class="catalog__item" v-for="(item, i) in filterBy()" :key="`film_${i}`" :id="`film_${i}`">
+        <Card :item="item" />
       </li>
     </ul>
+    <!-- back-to-top -->
     <div class="back-to-top">
-      <button
-        class="btn btn--back-to-top"
-        @click="topFunction"
-        :class="[scrolled ? showInline : hide]"
-      >
-        Back to top
-      </button>
+      <button class="btn btn--back-to-top" @click="topFunction" :class="[scrolled ? showInline : hide]">Back to top</button>
     </div>
   </div>
 </template>
@@ -54,6 +51,9 @@ export default {
       hide: "hide",
       scrolled: false,
       genres: [],
+      filterSelected: "",
+      filterCollection: [],
+      filters: []
     };
   },
   props: {
@@ -130,6 +130,14 @@ export default {
                   e.genresList = e.genre_ids.map((e) => {
                     for (let i = 0; i < this.genres.length; i++) {
                       if (this.genres[i].id == e) {
+                        if(this.filters.includes(this.genres[i].name) ==false) {
+                          this.filters.push(this.genres[i].name);
+                          this.filterCollection.push({
+                            btn:this.genres[i].name,
+                            active: false
+                          })
+                        }
+
                         return this.genres[i].name;
                       }
                     }
@@ -139,14 +147,27 @@ export default {
             });
           })
         );
-      //!then
     },
   },
   methods: {
     filterBy() {
-      return this.catalog.filter((e) =>
-        e.category.toLowerCase().includes(this.filterString.toLowerCase())
-      );
+      return this.catalog.filter((e) => {
+        if (
+          this.filterSelected == "" &&
+          e.category.toLowerCase().includes(this.filterString.toLowerCase())
+        ) {
+          return e;
+        } else if (
+          e.category.toLowerCase().includes(this.filterString.toLowerCase()) &&
+          e.genresList.includes(this.filterSelected) 
+        ) {
+          return e;
+        } else if (this.filterString.toLowerCase() == "all" && e.genresList.includes(this.filterSelected)) {
+          return e
+        } else if (this.filterString.toLowerCase() == "all" && this.filterSelected == "") {
+          return e
+        } 
+      });
     },
     topFunction() {
       this.$refs = 0;
@@ -159,10 +180,26 @@ export default {
           : (this.scrolled = false);
       };
     },
+    getFilter: function (e, i) {
+      this.filterCollection.forEach((elm, ind) => {
+        if(i != ind) {
+          elm.active = false
+        }
+      });
+      if(this.filterSelected == e) {
+        this.filterSelected = ""
+      } else {
+        this.filterSelected = e
+      }
+    },
   },
   mounted() {
     this.$parent.$on("filterMovie", (filter) => {
-      this.filterString = filter;
+      if(filter == this.filterString) {
+        this.filterString = "all"
+      } else {
+        this.filterString = filter;
+      }
     });
     this.scroll();
   },
@@ -184,6 +221,17 @@ export default {
     font-size: 3rem;
     font-weight: 400;
     margin: 0 $gutter-md;
+  }
+}
+
+.genres-filter {
+  @include inlineList;
+  padding: $gutter-md 0;
+
+  .btn-filter {
+    padding: $gutter $gutter-md;
+    margin: $gutter-sm;
+    font-size: 1rem;
   }
 }
 

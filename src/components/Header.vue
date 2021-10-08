@@ -8,7 +8,7 @@
         <nav class="navbar__nav">
             <ul class="nav__list">
                 <li class="list__item">
-                    <button type="button" class="btn f--size-sm" @click="filterCatalogBy(''); seriesActive=false; movieActive=false">All</button>
+                    <button type="button" class="btn f--size-sm" @click="filterCatalogBy('All'); seriesActive=false; movieActive=false">All</button>
                 </li>
                 <li class="list__item">
                     <button type="button" class="btn f--size-sm btn-filter" @click="filterCatalogBy('movie'); movieActive = !movieActive; seriesActive=false" :class="{'active' : movieActive}">Movie</button>
@@ -100,22 +100,6 @@ export default {
                 width: 1.25rem;
                 
             }
-        }
-    }
-
-
-    .btn-filter {
-        // border: 1px solid #fff;
-        color: $grey;
-        padding: $gutter-sm $gutter-md;
-        border-radius: .2rem;
-        background-color: #2a2a2a;
-        transition: color .5s;
-
-        &:hover,
-        &.active {
-            color: #fff;
-            background-color: #333333;
         }
     }
 }

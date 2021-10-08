@@ -83,6 +83,21 @@ button {
     bottom: 100px;
 }
 
+.btn-filter {
+    // border: 1px solid #fff;
+    color: $grey;
+    padding: $gutter-sm $gutter-md;
+    border-radius: .2rem;
+    background-color: #2a2a2a;
+    transition: color .5s;
+
+    &:hover,
+    &.active {
+        color: #fff;
+        background-color: #333333;
+    }
+}
+
 //input
 input {
     padding: $gutter-sm $gutter;
