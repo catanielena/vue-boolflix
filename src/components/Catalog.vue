@@ -186,13 +186,13 @@ export default {
           elm.active = false
         }
       });
-      if(this.filterSelected == e) {
-        this.filterSelected = ""
-      } else {
-        this.filterSelected = e
-      }
+        if(this.filterSelected == e) {
+          this.filterSelected = ""
+        } else {
+          this.filterSelected = e
+        }
+      },
     },
-  },
   mounted() {
     this.$parent.$on("filterMovie", (filter) => {
       if(filter == this.filterString) {
