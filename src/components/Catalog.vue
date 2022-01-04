@@ -302,6 +302,15 @@ export default {
   z-index: 10;
 }
 
+@media screen and (max-width: 1100px) {
+  .catalog {
+
+    .catalog__item {
+      height: 20rem;
+    }
+  }
+}
+
 @media screen and (max-width: 810px) {
   .related {
     display: none;
@@ -325,6 +334,20 @@ export default {
     .catalog__item {
       height: 20rem;
       width: calc(50% - ($gutter-xs * 2));
+
+      &::after {
+        box-shadow: inset 0px -60px 50px -50px #000;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .catalog {
+
+    .catalog__item {
+      height: 20rem;
+      width: 100%;
 
       &::after {
         box-shadow: inset 0px -60px 50px -50px #000;
