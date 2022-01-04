@@ -189,8 +189,9 @@ export default {
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 810px) {
     .card {
+        overflow-y: auto;
         .missing--image {
 
             h3 {

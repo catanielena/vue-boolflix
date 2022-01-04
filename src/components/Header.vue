@@ -58,6 +58,7 @@ export default {
 .header {
     $this: &;
     @include flex--SB-C;
+    flex-wrap: wrap;
     position: fixed;
     padding: $gutter $gutter-md;
     top: 0;
@@ -72,7 +73,6 @@ export default {
 
     .nav__list {
         @include flex--ST-C;
-        margin: 0 5rem;
 
         .list__item {
             margin: 0 $gutter-md;
@@ -90,7 +90,6 @@ export default {
     form {
         @include flex--x-C;
         justify-content: center;
-        width: 100%;
         .btn {
             display: flex;
             margin: 0 $gutter;
@@ -103,4 +102,14 @@ export default {
         }
     }
 }
+
+@media screen and (max-width:600px) {
+    .header {
+        form {
+            margin: 1rem 0 0 auto;
+        }
+    }
+}
+
 </style>
+

@@ -46,4 +46,10 @@ main {
   margin-top: 2.75rem;
   overflow-y: hidden;
 }
+
+@media screen and (max-width:600px) {
+  main {
+    margin-top: 5.5rem;
+  }
+}
 </style>
